@@ -1,0 +1,83 @@
+import mongoose from mongoose
+
+const userSchema = new mongoose.Schema(
+  {
+    // username: String,
+    // email: String,
+    // isActive: Boolean
+    username:{
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
+    password: {
+      type: String,
+      required: true
+      // required: [true, "password is required."]
+    }
+  }
+  )
+
+export const User = mongoose.model("User", userSchema)
+
+---------------------------------------------------
+
+import mongoose from 'mongoose';
+
+const todoSchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+    complete: {
+      type: Boolean,
+      default: false,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    subTodos: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'subTodo',
+      },
+    ], //array of subTodos.
+  },
+  { timestamps: true }
+);
+
+export const Todo = mongoose.model('Todo', todoSchema);
+
+
+--------------------------------------------------
+
+import mongoose from 'mongoose';
+
+const subTodoSchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+    complete: {
+      type: Boolean,
+      default: false,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  },
+  { timestamps: true }
+);
+
+export const SubTodo = mongoose.model('User', subTodoSchema);
